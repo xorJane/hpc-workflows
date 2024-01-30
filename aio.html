@@ -226,6 +226,30 @@
 </div>
 <!--/div.accordion-flush-->
 
+<div class="accordion accordion-flush" id="accordionFlush6">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading6">
+        <a href="05-chaining_rules.html">5. Chaining rules</a>
+    </div>
+<!--/div.accordion-header-->
+        
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush7">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading7">
+        <a href="06-expansion.html">6. Processing lists of inputs</a>
+    </div>
+<!--/div.accordion-header-->
+        
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
                 </div>
               </div>
             </div>
@@ -467,9 +491,9 @@ available</p>
 </div>
 </div>
 </div>
-<div id="running-snakemake" class="callout discussion">
+<div id="running-snakemake" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
 <div id="running-snakemake" class="callout-inner">
 <h3 class="callout-title">Running Snakemake<a class="anchor" aria-label="anchor" href="#running-snakemake"></a>
@@ -486,7 +510,16 @@ available options. What does the <code>-p</code> option in the
 </ol>
 <p><em>Hint: you can search in the text by pressing <code>/</code>, and
 quit back to the shell with <code>q</code></em></p>
-<div class="Solution">
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
 <ol start="2" style="list-style-type: decimal">
 <li>Prints the shell commands that are being run to the terminal</li>
 </ol>
@@ -616,7 +649,7 @@ cluster with the options <code>--executor slurm</code> to
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The rule is almost identical to the previous rule save for the rule
 name and output file:</p>
@@ -832,7 +865,7 @@ length of our jobs to two minutes for Slurm.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2">Show me the solution</h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1625,6 +1658,551 @@ workflow gains more steps this will become very useful to us indeed.</p>
 that the output matches the target”</li>
 <li>“Snakemake checks for various error conditions and will stop if it
 sees a problem”</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- 
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use. 
+ -->
+</section></section><section id="aio-05-chaining_rules"><p>Content from <a href="05-chaining_rules.html">Chaining rules</a></p>
+<hr>
+<p>Last updated on 2024-01-30 |
+        
+        <a href="https://github.com/carpentries-incubator/hpc-workflows/edit/main/episodes/05-chaining_rules.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<div class="text-end">
+          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
+        </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>“How do I combine rules into a workflow?”</li>
+<li>“How do I make a rule with multiple inputs and outputs?”</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>“Use Snakemake to filter and then count the lines in a FASTQ
+file”</li>
+<li>“Add an RNA quantification step in the data analysis”</li>
+<li>“See how Snakemake deals with missing outputs”</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="a-pipeline-of-multiple-rules"><h2 class="section-heading">A pipeline of multiple rules<a class="anchor" aria-label="anchor" href="#a-pipeline-of-multiple-rules"></a>
+</h2>
+<hr class="half-width">
+<p>We now have a rule that can generate output for any value of
+<code>p</code> and any number tasks, we just need to call Snakemake with
+the parameters that we want:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile p_0.999/runs/amdahl_run_6.json</span></code></pre>
+</div>
+<p>That’s not exactly convenient though, to generate a full dataset we
+have to run Snakemake lots of times with different output file targets.
+Rather than that, let’s create a rule that can generate those files for
+us.</p>
+<p>Chaining rules in Snakemake is a matter of choosing filename patterns
+that connect the rules. There’s something of an art to it - most times
+there are several options that will work:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rule generate_run_files:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">/runs/amdahl_run_6.json"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    shell:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"echo {input} done &gt; {output}"</span></span></code></pre>
+</div>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge<a class="anchor" aria-label="anchor" href="#challenge1"></a>
+</h3>
+<div class="callout-content">
+<p>The new rule is doing no work, it’s just making sure we create the
+file we want. It’s not worth executing on the cluster. How do ensure it
+runs on the login node only?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p>We need to add the new rule to our <code>localrules</code>:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>localrules: hostname_login, generate_run_files</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Now let’s run the new rule:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ snakemake <span class="at">--profile</span> cluster_profile/ p_0.999_runs.txt</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Using profile cluster_profile/ for setting default command line arguments.
+Building DAG of jobs...
+Retrieving input from storage.
+Using shell: /cvmfs/software.eessi.io/versions/2023.06/compat/linux/x86_64/bin/bash
+Provided remote nodes: 3
+Job stats:
+job                   count
+------------------  -------
+amdahl_run                1
+generate_run_files        1
+total                     2
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Jan 30 17:39:29 2024]
+rule amdahl_run:
+    output: p_0.999/runs/amdahl_run_6.json
+    jobid: 1
+    reason: Missing output files: p_0.999/runs/amdahl_run_6.json
+    wildcards: parallel_proportion=0.999, parallel_tasks=6
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=&lt;TBD&gt;, mem_mb_per_cpu=3600, runtime=2, mpi=mpiexec, tasks=6
+
+mpiexec -n 6 amdahl --terse -p 0.999 &gt; p_0.999/runs/amdahl_run_6.json
+No SLURM account given, trying to guess.
+Guessed SLURM account: def-users
+Job 1 has been submitted with SLURM jobid 342 (log: /home/ocaisa/.snakemake/slurm_logs/rule_amdahl_run/342.log).
+[Tue Jan 30 17:47:31 2024]
+Finished job 1.
+1 of 2 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Jan 30 17:47:31 2024]
+localrule generate_run_files:
+    input: p_0.999/runs/amdahl_run_6.json
+    output: p_0.999_runs.txt
+    jobid: 0
+    reason: Missing output files: p_0.999_runs.txt; Input files updated by another job: p_0.999/runs/amdahl_run_6.json
+    wildcards: parallel_proportion=0.999
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=/tmp, mem_mb_per_cpu=3600, runtime=2
+
+echo p_0.999/runs/amdahl_run_6.json done &gt; p_0.999_runs.txt
+[Tue Jan 30 17:47:31 2024]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: .snakemake/log/2024-01-30T173929.781106.snakemake.log</code></pre>
+</div>
+<p>Look at the logging messages that Snakemake prints in the terminal.
+What has happened here?</p>
+<ol style="list-style-type: decimal">
+<li>Snakemake looks for a rule to make
+<code>p_0.999_runs.txt</code>
+</li>
+<li>It determines that “generate_run_files” can make this if
+<code>parallel_proportion=0.999</code>
+</li>
+<li>It sees that the input needed is therefore
+<code>p_0.999/runs/amdahl_run_6.json</code> <br><br>
+</li>
+<li>Snakemake looks for a rule to make
+<code>p_0.999/runs/amdahl_run_6.json</code>
+</li>
+<li>It determines that “amdahl_run” can make this if
+<code>parallel_proportion=0.999</code> and <code>parallel_tasks=6</code>
+<br><br>
+</li>
+<li>Now Snakemake has reached an available input file (in this case, no
+input file is actually required), it runs both steps to get the final
+output</li>
+</ol>
+<p>This, in a nutshell, is how we build workflows in Snakemake.</p>
+<ol style="list-style-type: decimal">
+<li>Define rules for all the processing steps</li>
+<li>Choose <code>input</code> and <code>output</code> naming patterns
+that allow Snakemake to link the rules</li>
+<li>Tell Snakemake to generate the final output file(s)</li>
+</ol>
+<p>If you are used to writing regular scripts this takes a little
+getting used to. Rather than listing steps in order of execution, you
+are alway <strong>working backwards</strong> from the final desired
+result. The order of operations is determined by applying the pattern
+matching rules to the filenames, not by the order of the rules in the
+Snakefile.</p>
+<div id="outputs-first" class="callout callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="outputs-first" class="callout-inner">
+<h3 class="callout-title">Outputs first?<a class="anchor" aria-label="anchor" href="#outputs-first"></a>
+</h3>
+<div class="callout-content">
+<p>The Snakemake approach of working backwards from the desired output
+to determine the workflow is why we’re putting the <code>output</code>
+lines first in all our rules - to remind us that these are what
+Snakemake looks at first!</p>
+<p>Many users of Snakemake, and indeed the official documentation,
+prefer to have the <code>input</code> first, so in practice you should
+use whatever order makes sense to you.</p>
+</div>
+</div>
+</div>
+<div id="log-outputs-in-snakemake" class="callout callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="log-outputs-in-snakemake" class="callout-inner">
+<h3 class="callout-title">
+<code>log</code>outputs in Snakemake<a class="anchor" aria-label="anchor" href="#log-outputs-in-snakemake"></a>
+</h3>
+<div class="callout-content">
+<p>Snakemake has a dedicated rule field for outputs that are <a href="https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#log-files" class="external-link">log
+files</a>, and these are mostly treated as regular outputs except that
+log files are not removed if the job produces an error. This means you
+can look at the log to help diagnose the error. In a real workflow this
+can be very useful, but in terms of learning the fundementals of
+Snakemake we’ll stick with regular <code>input</code> and
+<code>output</code> fields here.</p>
+</div>
+</div>
+</div>
+<div id="errors-are-normal" class="callout callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="errors-are-normal" class="callout-inner">
+<h3 class="callout-title">Errors are normal<a class="anchor" aria-label="anchor" href="#errors-are-normal"></a>
+</h3>
+<div class="callout-content">
+<p>Don’t be disheartened if you see errors like the one above when first
+testing your new Snakemake pipelines. There is a lot that can go wrong
+when writing a new workflow, and you’ll normally need several iterations
+to get things just right. One advantage of the Snakemake approach
+compared to regular scripts is that Snakemake fails fast when there is a
+problem, rather than ploughing on and potentially running junk
+calculations on partial or corrupted data. Another advantage is that
+when a step fails we can safely resume from where we left off, as we’ll
+see in the next episode.</p>
+</div>
+</div>
+</div>
+<div id="keypoints1" class="callout keypoints">
+<div class="callout-square">
+<i class="callout-icon" data-feather="key"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Key Points<a class="anchor" aria-label="anchor" href="#keypoints1"></a>
+</h3>
+<div class="callout-content">
+<ul>
+<li>“Snakemake links rules by iteratively looking for rules that make
+missing inputs”</li>
+<li>“Rules may have multiple named inputs and/or outputs”</li>
+<li>“If a shell command does not yield an expected output then Snakemake
+will regard that as a failure”</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- 
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use. 
+ -->
+</section></section><section id="aio-06-expansion"><p>Content from <a href="06-expansion.html">Processing lists of inputs</a></p>
+<hr>
+<p>Last updated on 2024-01-30 |
+        
+        <a href="https://github.com/carpentries-incubator/hpc-workflows/edit/main/episodes/06-expansion.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<div class="text-end">
+          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
+        </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>“How do I process multiple files at once?”</li>
+<li>“How do I combine multiple files together?”</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>“Use Snakemake to process all our samples at once”</li>
+<li>“Make a scalability plot that brings our results together”</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>We created a rule that can generate a single output file, but we’re
+not going to create multiple rules for every output file. We want to
+generate all of the run files with a single rule if we could, well
+Snakemake can indeed take a list of input files:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rule generate_run_files:</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">/runs/amdahl_run_2.json"</span>, <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">/runs/amdahl_run_6.json"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    shell:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"echo {input} done &gt; {output}"</span></span></code></pre>
+</div>
+<p>That’s great, but we don’t want to have to list all of the files
+we’re interested in individually. How can we do this?</p>
+<section id="defining-a-list-of-samples-to-process"><h2 class="section-heading">Defining a list of samples to process<a class="anchor" aria-label="anchor" href="#defining-a-list-of-samples-to-process"></a>
+</h2>
+<hr class="half-width">
+<p>To do this, we can define some lists as Snakemake <strong>global
+variables</strong>.</p>
+<p>Global variables should be added before the rules in the
+Snakefile.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Task sizes we wish to run</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>NTASK_SIZES <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span></code></pre>
+</div>
+<ul>
+<li>Unlike with variables in shell scripts, we can put spaces around the
+<code>=</code> sign, but they are not mandatory.</li>
+<li>The lists of quoted strings are enclosed in square brackets and
+comma-separated. If you know any Python you’ll recognise this as Python
+list syntax.</li>
+<li>A good convention is to use capitalized names for these variables,
+but this is not mandatory.</li>
+<li>Although these are referred to as variables, you can’t actually
+change the values once the workflow is running, so lists defined this
+way are more like constants.</li>
+</ul></section><section id="using-a-snakemake-rule-to-define-a-batch-of-outputs"><h2 class="section-heading">Using a Snakemake rule to define a batch of outputs<a class="anchor" aria-label="anchor" href="#using-a-snakemake-rule-to-define-a-batch-of-outputs"></a>
+</h2>
+<hr class="half-width">
+<p>Now let’s update our Snakefile to leverage the new global variable to
+create a list of files:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rule generate_run_files:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  expand(<span class="st">"p_</span><span class="sc">{{</span><span class="st">parallel_proportion</span><span class="sc">}}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{count}</span><span class="st">.json"</span>, count<span class="op">=</span>NTASK_SIZES)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    shell:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"echo {input} done &gt; {output}"</span></span></code></pre>
+</div>
+<p>The <code>expand(...)</code> function in this rule generates a list
+of filenames, by taking the first thing in the single parentheses as a
+template and replacing <code>{count}</code> with all the
+<code>NTASK_SIZES</code>. Since there are 5 elements in the list, this
+will yield 5 files we want to make. Note that we had to protect our
+wildcard in a second set of parentheses so it wouldn’t be interpreted as
+something that needed to be expanded.</p>
+<p>In our current case we still rely on the file name to define the
+value of the wildcard <code>parallel_proportion</code> so we can’t call
+the rule directly, we still need to request a specific file:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.999_runs.txt</span></code></pre>
+</div>
+<p>If you don’t specify a target rule name or any file names on the
+command line when running Snakemake, the default is to use <strong>the
+first rule</strong> in the Snakefile as the target.</p>
+<div id="rules-as-targets" class="callout callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="rules-as-targets" class="callout-inner">
+<h3 class="callout-title">Rules as targets<a class="anchor" aria-label="anchor" href="#rules-as-targets"></a>
+</h3>
+<div class="callout-content">
+<p>Giving the name of a rule to Snakemake on the command line only works
+when that rule has <em>no wildcards</em> in the outputs, because
+Snakemake has no way to know what the desired wildcards might be. You
+will see the error “Target rules may not contain wildcards.” This can
+also happen when you don’t supply any explicit targets on the command
+line at all, and Snakemake tries to run the first rule defined in the
+Snakefile.</p>
+</div>
+</div>
+</div>
+</section><section id="rules-that-combine-multiple-inputs"><h2 class="section-heading">Rules that combine multiple inputs<a class="anchor" aria-label="anchor" href="#rules-that-combine-multiple-inputs"></a>
+</h2>
+<hr class="half-width">
+<p>Our <em><code>generate_run_files</code></em> rule is a rule which
+takes a list of input files. The length of that list is not fixed by the
+rule, but can change based on <code>NTASK_SIZES</code>.</p>
+<p>In our workflow the final step is to take all the generated files and
+combine them into a plot. To do that, you may have heard that some
+people use a python library called <code>matplotlib</code>. It’s beyond
+the scope of this tutorial to write the python script to create a final
+plot, so we provide you with the script as part of this lesson (at
+<add link>). You can download it with</add></p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> <span class="op">&lt;</span>ADD LINK<span class="op">&gt;</span></span></code></pre>
+</div>
+<p>The script <code>plot_terse_amdahl_results.py</code> needs a command
+line that looks like:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> plot_terse_amdahl_results.py <span class="op">&lt;</span>output jpeg filename<span class="op">&gt;</span> <span class="op">&lt;</span>1st input file<span class="op">&gt;</span> <span class="op">&lt;</span>2nd input file<span class="op">&gt;</span> ...</span></code></pre>
+</div>
+<p>Let’s introduce that into our <code>generate_run_files</code>
+rule:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rule generate_run_files:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  expand(<span class="st">"p_</span><span class="sc">{{</span><span class="st">parallel_proportion</span><span class="sc">}}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{count}</span><span class="st">.json"</span>, count<span class="op">=</span>NTASK_SIZES)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    shell:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"python plot_terse_amdahl_results.py {output} {input}"</span></span></code></pre>
+</div>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge<a class="anchor" aria-label="anchor" href="#challenge1"></a>
+</h3>
+<div class="callout-content">
+<p>This script relies on <code>matplotlib</code>, is it available as an
+environment module? Add this requirement to our rule.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rule generate_run_files:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_scalability.jpg"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  expand(<span class="st">"p_</span><span class="sc">{{</span><span class="st">parallel_proportion</span><span class="sc">}}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{count}</span><span class="st">.json"</span>, count<span class="op">=</span>NTASK_SIZES)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    envmodules:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">"matplotlib"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    shell:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">"python plot_terse_amdahl_results.py {output} {input}"</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Now we finally get to generate a scaling plot! Run the final
+Snakemake command</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.999_scalability.jpg</span></code></pre>
+</div>
+<div id="challenge2" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge<a class="anchor" aria-label="anchor" href="#challenge2"></a>
+</h3>
+<div class="callout-content">
+<p>Generate the scalability plot for all values from 1 to 10 cores.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2">Show me the solution</h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>NTASK_SIZES <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>]</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge3" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge<a class="anchor" aria-label="anchor" href="#challenge3"></a>
+</h3>
+<div class="callout-content">
+<p>Rerun the workflow for a <code>p</code> value of 0.8</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3">Show me the solution</h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.8_scalability.jpg</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="keypoints1" class="callout keypoints">
+<div class="callout-square">
+<i class="callout-icon" data-feather="key"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Key Points<a class="anchor" aria-label="anchor" href="#keypoints1"></a>
+</h3>
+<div class="callout-content">
+<ul>
+<li>“Use the <code>expand()</code> function to generate lists of
+filenames you want to combine”</li>
+<li>“Any <code>{input}</code> to a rule can be a variable-length
+list”</li>
 </ul>
 </div>
 </div>

@@ -13,6 +13,12 @@
     <loc>https://carpentries-incubator.github.io/hpc-workflows/04-snakemake_and_mpi.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/hpc-workflows/05-chaining_rules.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/hpc-workflows/06-expansion.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/hpc-workflows/404.html</loc>
   </url>
   <url>
@@ -47,6 +53,12 @@
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/hpc-workflows/instructor/04-snakemake_and_mpi.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/hpc-workflows/instructor/05-chaining_rules.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/hpc-workflows/instructor/06-expansion.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/hpc-workflows/instructor/404.html</loc>
