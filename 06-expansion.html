@@ -269,7 +269,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Processing lists of inputs</h1>
-        <p>Last updated on 2024-01-30 |
+        <p>Last updated on 2024-02-01 |
         
         <a href="https://github.com/carpentries-incubator/hpc-workflows/edit/main/episodes/06-expansion.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -343,8 +343,8 @@ change the values once the workflow is running, so lists defined this
 way are more like constants.</li>
 </ul></section><section id="using-a-snakemake-rule-to-define-a-batch-of-outputs"><h2 class="section-heading">Using a Snakemake rule to define a batch of outputs<a class="anchor" aria-label="anchor" href="#using-a-snakemake-rule-to-define-a-batch-of-outputs"></a>
 </h2>
-<hr class="half-width"><p>Now let’s update our Snakefile to leverage the new global variable to
-create a list of files:</p>
+<hr class="half-width"><p>Now let’s update our Snakefile to leverage the new global variable
+and create a list of files:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -385,16 +385,16 @@ when that rule has <em>no wildcards</em> in the outputs, because
 Snakemake has no way to know what the desired wildcards might be. You
 will see the error “Target rules may not contain wildcards.” This can
 also happen when you don’t supply any explicit targets on the command
-line at all, and Snakemake tries to run the first rule defined in the
+line at all, and Snakemake tries to runthe first rule defined in the
 Snakefile.</p>
 </div>
 </div>
 </div>
 </section><section id="rules-that-combine-multiple-inputs"><h2 class="section-heading">Rules that combine multiple inputs<a class="anchor" aria-label="anchor" href="#rules-that-combine-multiple-inputs"></a>
 </h2>
-<hr class="half-width"><p>Our <em><code>generate_run_files</code></em> rule is a rule which
-takes a list of input files. The length of that list is not fixed by the
-rule, but can change based on <code>NTASK_SIZES</code>.</p>
+<hr class="half-width"><p>Our <code>generate_run_files</code> rule is a rule which takes a list
+of input files. The length of that list is not fixed by the rule, but
+can change based on <code>NTASK_SIZES</code>.</p>
 <p>In our workflow the final step is to take all the generated files and
 combine them into a plot. To do that, you may have heard that some
 people use a python library called <code>matplotlib</code>. It’s beyond
@@ -442,7 +442,7 @@ environment module? Add this requirement to our rule.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -483,7 +483,7 @@ Snakemake command</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2">Show me the solution</h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -511,7 +511,7 @@ Snakemake command</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3">Show me the solution</h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -519,6 +519,19 @@ Snakemake command</p>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.8_scalability.jpg</span></code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div id="bonus-round" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div id="bonus-round" class="callout-inner">
+<h3 class="callout-title">Bonus round<a class="anchor" aria-label="anchor" href="#bonus-round"></a>
+</h3>
+<div class="callout-content">
+<p>Create a final rule that can be called directly and generates a
+scaling plot for 3 different values of <code>p</code>.</p>
 </div>
 </div>
 </div>
@@ -599,8 +612,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/hpc-workflows/06-expansion.html",
   "identifier": "https://carpentries-incubator.github.io/hpc-workflows/06-expansion.html",
   "dateCreated": "2023-04-19",
-  "dateModified": "2024-01-30",
-  "datePublished": "2024-01-30"
+  "dateModified": "2024-02-01",
+  "datePublished": "2024-02-01"
 }
 
   </script><script>

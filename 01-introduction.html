@@ -268,7 +268,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Running commands with Snakemake</h1>
-        <p>Last updated on 2024-01-30 |
+        <p>Last updated on 2024-02-01 |
         
         <a href="https://github.com/carpentries-incubator/hpc-workflows/edit/main/episodes/01-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -365,7 +365,7 @@ tabs. See the setup section for how to make your text editor do
 this.</li>
 <li>The rule definition starts with the keyword <code>rule</code>
 followed by the rule name, then a colon.</li>
-<li>We named the rule <code>hostname</code>. You may use letters,
+<li>We named the rule <code>hostname_login</code>. You may use letters,
 numbers or underscores, but the rule name must begin with a letter and
 may not be a keyword.</li>
 <li>The keywords <code>input</code>, <code>output</code>,
@@ -385,7 +385,7 @@ were any missing quotes, bad indents, etc. we may see an error.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">-j1</span> <span class="at">-p</span> hostname_login.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">-j1</span> <span class="at">-p</span> hostname_login</span></code></pre>
 </div>
 <div id="bash-snakemake-command-not-found..." class="callout callout">
 <div class="callout-square">
@@ -482,9 +482,7 @@ quit back to the shell with <code>q</code></em></p>
 </ol><p>This is such a useful thing we don’t know why it isn’t the default!
 The <code>-j1</code> option is what tells Snakemake to only run one
 process at a time, and we’ll stick with this for now as it makes things
-simpler. The <code>-F</code> option tells Snakemake to always overwrite
-output files, and we’ll learn about protected outputs much later in the
-course. Answer 4 is a total red-herring, as Snakemake never prompts
+simpler. Answer 4 is a total red-herring, as Snakemake never prompts
 interactively for user input.</p>
 </div>
 </div>
@@ -568,8 +566,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/hpc-workflows/01-introduction.html",
   "identifier": "https://carpentries-incubator.github.io/hpc-workflows/01-introduction.html",
   "dateCreated": "2023-04-19",
-  "dateModified": "2024-01-30",
-  "datePublished": "2024-01-30"
+  "dateModified": "2024-02-01",
+  "datePublished": "2024-02-01"
 }
 
   </script><script>
