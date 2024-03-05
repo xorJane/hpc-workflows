@@ -329,24 +329,24 @@ to find out why?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> spider amdahl</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load amdahl</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">module</span> spider amdahl</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">module</span> load amdahl</span></code></pre>
 </div>
 <p>will locate and then load the <code>amdahl</code> module. We can then
 update/replace our rule to run the <code>amdahl</code> application:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rule amdahl_run:</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"amdahl_run.txt"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"mpiexec -n 1 amdahl &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>rule amdahl_run:</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    output: <span class="st">"amdahl_run.txt"</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    shell:</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>        <span class="co">"mpiexec -n 1 amdahl &gt; {output}"</span></span></code></pre>
 </div>
 <p>However, when we try to execute the rule we get an error (unless you
 already have a different version of <code>amdahl</code> available in
@@ -390,15 +390,15 @@ option:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rule amdahl_run:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"amdahl_run.txt"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    envmodules:</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">"mpi4py"</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"mpiexec -n 1 amdahl &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>rule amdahl_run:</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    output: <span class="st">"amdahl_run.txt"</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    envmodules:</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>      <span class="co">"mpi4py"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>    shell:</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>        <span class="co">"mpiexec -n 1 amdahl &gt; {output}"</span></span></code></pre>
 </div>
 <p>Adding these lines are not enough to make the rule execute however.
 Not only do you have to tell Snakemake what modules to load, but you
@@ -410,7 +410,7 @@ option</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile <span class="at">--use-envmodules</span> amdahl_run</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile <span class="at">--use-envmodules</span> amdahl_run</span></code></pre>
 </div>
 <div id="challenge2" class="callout challenge">
 <div class="callout-square">
@@ -431,19 +431,19 @@ so make that a default option of our profile (by setting it’s value to
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2">Show me the solution</h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Update our cluster profile to</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printshellcmds</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">executor</span><span class="kw">:</span><span class="at"> slurm</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">default-resources</span><span class="kw">:</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mem_mb_per_cpu=3600</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> runtime=2</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">use-envmodules</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span></code></pre>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">printshellcmds</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">executor</span><span class="kw">:</span><span class="at"> slurm</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">default-resources</span><span class="kw">:</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mem_mb_per_cpu=3600</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> runtime=2</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="fu">use-envmodules</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span></code></pre>
 </div>
 <p>If you want to test it, you need to erase the output file of the rule
 and rerun Snakemake.</p>
@@ -483,17 +483,17 @@ placeholders:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rule amdahl_run:</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"amdahl_run.txt"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    envmodules:</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    resources:</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">'mpiexec'</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      tasks<span class="op">=</span><span class="dv">2</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>rule amdahl_run:</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    output: <span class="st">"amdahl_run.txt"</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    envmodules:</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    resources:</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">'mpiexec'</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>      tasks<span class="op">=</span><span class="dv">2</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>    shell:</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl &gt; {output}"</span></span></code></pre>
 </div>
 <p>That worked but now we have a bit of an issue. We want to do this for
 a few different values of <code>tasks</code> that would mean we would
@@ -506,16 +506,15 @@ a wildcard looks like</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>output: <span class="st">"amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.txt"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>output: <span class="st">"amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.txt"</span></span></code></pre>
 </div>
 <p>where <code>parallel_tasks</code> is our wildcard.</p>
-<div id="wildcards" class="callout callout">
+<div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="wildcards" class="callout-inner">
-<h3 class="callout-title">Wildcards<a class="anchor" aria-label="anchor" href="#wildcards"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="wildcards">Wildcards<a class="anchor" aria-label="anchor" href="#wildcards"></a></h3>
 <div class="callout-content">
 <p>Wildcards are used in the <code>input</code> and <code>output</code>
 lines of the rule to represent parts of filenames. Much like the
@@ -557,13 +556,12 @@ replaced</li>
 <li>Checks that the command ran without errors <em>and</em> made the new
 output file as expected</li>
 </ol></li>
-</ol><div id="dry-run--n-mode" class="callout callout">
+</ol><div id="callout2" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="dry-run--n-mode" class="callout-inner">
-<h3 class="callout-title">Dry-run (<code>-n</code>) mode<a class="anchor" aria-label="anchor" href="#dry-run--n-mode"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="dry-run--n-mode">Dry-run (<code>-n</code>) mode<a class="anchor" aria-label="anchor" href="#dry-run--n-mode"></a></h3>
 <div class="callout-content">
 <p>It’s often useful to run just the first two phases, so that Snakemake
 will plan out the jobs to run, and print them to the screen, but never
@@ -571,7 +569,7 @@ actually run them. This is done with the <code>-n</code> flag, eg:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> $ <span class="ex">snakemake</span> <span class="at">-n</span> ...</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="op">&gt;</span> $ <span class="ex">snakemake</span> <span class="at">-n</span> ...</span></code></pre>
 </div>
 </div>
 </div>
@@ -586,17 +584,17 @@ what we’ve seen so far, you might imagine this could look like</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rule amdahl_run:</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.txt"</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    envmodules:</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    resources:</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>      tasks<span class="op">=</span><span class="st">"</span><span class="sc">{parallel_tasks}</span><span class="st">"</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>rule amdahl_run:</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    output: <span class="st">"amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.txt"</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    envmodules:</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    resources:</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>      tasks<span class="op">=</span><span class="st">"</span><span class="sc">{parallel_tasks}</span><span class="st">"</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>    shell:</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl &gt; {output}"</span></span></code></pre>
 </div>
 <p>but there are two problems with this:</p>
 <ul><li>
@@ -606,7 +604,7 @@ call the rule):</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile amdahl_run_2.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile amdahl_run_2.txt</span></code></pre>
 </div>
 <p>This is perfectly valid, as Snakemake can figure out that it has a
 rule that can match that filename.</p>
@@ -638,37 +636,36 @@ follows:</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">lambda</span> x: x <span class="op">+</span> <span class="dv">54</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="kw">lambda</span> x: x <span class="op">+</span> <span class="dv">54</span></span></code></pre>
 </div>
 <p>Since our function <em>can</em> take the wildcards as arguments, we
 can use that to set the value for <code>tasks</code>:</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rule amdahl_run:</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.txt"</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    envmodules:</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    resources:</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>      <span class="co"># No direct way to access the wildcard in tasks, so we need to do this</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># indirectly by declaring a short function that takes the wildcards as an</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>      <span class="co"># argument</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>      tasks<span class="op">=</span><span class="kw">lambda</span> wildcards: <span class="bu">int</span>(wildcards.parallel_tasks)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>rule amdahl_run:</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>    output: <span class="st">"amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.txt"</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    envmodules:</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    resources:</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>      <span class="co"># No direct way to access the wildcard in tasks, so we need to do this</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>      <span class="co"># indirectly by declaring a short function that takes the wildcards as an</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>      <span class="co"># argument</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>      tasks<span class="op">=</span><span class="kw">lambda</span> wildcards: <span class="bu">int</span>(wildcards.parallel_tasks)</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>    shell:</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl &gt; {output}"</span></span></code></pre>
 </div>
 <p>Now we have a rule that can be used to generate output from runs of
 an arbitrary number of parallel tasks.</p>
-<div id="comments-in-snakefiles" class="callout callout">
+<div id="callout3" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="comments-in-snakefiles" class="callout-inner">
-<h3 class="callout-title">Comments in Snakefiles<a class="anchor" aria-label="anchor" href="#comments-in-snakefiles"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="comments-in-snakefiles">Comments in Snakefiles<a class="anchor" aria-label="anchor" href="#comments-in-snakefiles"></a></h3>
 <div class="callout-content">
 <p>In the above code, the line beginning <code>#</code> is a comment
 line. Hopefully you are already in the habit of adding comments to your
@@ -685,20 +682,20 @@ and Snakemake will take of directory creation for us:</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rule amdahl_run:</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"runs/amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.txt"</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    envmodules:</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    resources:</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>      <span class="co"># No direct way to access the wildcard in tasks, so we need to do this</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># indirectly by declaring a short function that takes the wildcards as an</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>      <span class="co"># argument</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>      tasks<span class="op">=</span><span class="kw">lambda</span> wildcards: <span class="bu">int</span>(wildcards.parallel_tasks)</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>rule amdahl_run:</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>    output: <span class="st">"runs/amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.txt"</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>    envmodules:</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>    resources:</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>      <span class="co"># No direct way to access the wildcard in tasks, so we need to do this</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>      <span class="co"># indirectly by declaring a short function that takes the wildcards as an</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>      <span class="co"># argument</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>      tasks<span class="op">=</span><span class="kw">lambda</span> wildcards: <span class="bu">int</span>(wildcards.parallel_tasks)</span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>    shell:</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl &gt; {output}"</span></span></code></pre>
 </div>
 <div id="challenge3" class="callout challenge">
 <div class="callout-square">
@@ -720,12 +717,12 @@ requested file to the <code>output</code> from a rule)</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3">Show me the solution</h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile runs/amdahl_run_6.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile runs/amdahl_run_6.txt</span></code></pre>
 </div>
 </div>
 </div>
@@ -739,8 +736,8 @@ us. To see the <code>amdahl</code> options we can use</p>
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ module load amdahl</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ amdahl <span class="at">--help</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ module load amdahl</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ amdahl <span class="at">--help</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -765,20 +762,20 @@ to match our new command:</p>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rule amdahl_run:</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"runs/amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.json"</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    envmodules:</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    resources:</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>      <span class="co"># No direct way to access the wildcard in tasks, so we need to do this</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># indirectly by declaring a short function that takes the wildcards as an</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>      <span class="co"># argument</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>      tasks<span class="op">=</span><span class="kw">lambda</span> wildcards: <span class="bu">int</span>(wildcards.parallel_tasks)</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl --terse &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>rule amdahl_run:</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>    output: <span class="st">"runs/amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.json"</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    envmodules:</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>    resources:</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>      <span class="co"># No direct way to access the wildcard in tasks, so we need to do this</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>      <span class="co"># indirectly by declaring a short function that takes the wildcards as an</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>      <span class="co"># argument</span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>      tasks<span class="op">=</span><span class="kw">lambda</span> wildcards: <span class="bu">int</span>(wildcards.parallel_tasks)</span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a>    shell:</span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl --terse &gt; {output}"</span></span></code></pre>
 </div>
 <p>There was another parameter for <code>amdahl</code> that caught my
 eye. <code>amdahl</code> has an option
@@ -791,20 +788,20 @@ the value right away:</p>
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>rule amdahl_run:</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.json"</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    envmodules:</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    resources:</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>      <span class="co"># No direct way to access the wildcard in tasks, so we need to do this</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># indirectly by declaring a short function that takes the wildcards as an</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>      <span class="co"># argument</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>      tasks<span class="op">=</span><span class="kw">lambda</span> wildcards: <span class="bu">int</span>(wildcards.parallel_tasks)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl --terse -p {wildcards.parallel_proportion} &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>rule amdahl_run:</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.json"</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>    envmodules:</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>      <span class="co">"amdahl"</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>    resources:</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>      mpi<span class="op">=</span><span class="st">"mpiexec"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a>      <span class="co"># No direct way to access the wildcard in tasks, so we need to do this</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a>      <span class="co"># indirectly by declaring a short function that takes the wildcards as an</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a>      <span class="co"># argument</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a>      tasks<span class="op">=</span><span class="kw">lambda</span> wildcards: <span class="bu">int</span>(wildcards.parallel_tasks)</span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a>    shell:</span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a>        <span class="co">"{resources.mpi} -n {resources.tasks} amdahl --terse -p {wildcards.parallel_proportion} &gt; {output}"</span></span></code></pre>
 </div>
 <div id="challenge4" class="callout challenge">
 <div class="callout-square">
@@ -824,12 +821,12 @@ default value is 0.8) for the case where we have 6 parallel tasks.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4">Show me the solution</h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile p_0.999/runs/amdahl_run_6.json</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile p_0.999/runs/amdahl_run_6.json</span></code></pre>
 </div>
 </div>
 </div>
@@ -913,7 +910,7 @@ any links that you are not going to use.
   "identifier": "https://carpentries-incubator.github.io/hpc-workflows/04-snakemake_and_mpi.html",
   "dateCreated": "2023-04-19",
   "dateModified": "2024-02-01",
-  "datePublished": "2024-02-27"
+  "datePublished": "2024-03-05"
 }
 
   </script><script>

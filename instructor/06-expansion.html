@@ -313,11 +313,11 @@ Snakemake can indeed take a list of input files:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rule generate_run_files:</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">/runs/amdahl_run_2.json"</span>, <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">/runs/amdahl_run_6.json"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"echo {input} done &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>rule generate_run_files:</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    <span class="bu">input</span>:  <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">/runs/amdahl_run_2.json"</span>, <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">/runs/amdahl_run_6.json"</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    shell:</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>        <span class="co">"echo {input} done &gt; {output}"</span></span></code></pre>
 </div>
 <p>That’s great, but we don’t want to have to list all of the files
 we’re interested in individually. How can we do this?</p>
@@ -330,8 +330,8 @@ Snakefile.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Task sizes we wish to run</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>NTASK_SIZES <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Task sizes we wish to run</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>NTASK_SIZES <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span></code></pre>
 </div>
 <ul><li>Unlike with variables in shell scripts, we can put spaces around the
 <code>=</code> sign, but they are not mandatory.</li>
@@ -350,11 +350,11 @@ and create a list of files:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rule generate_run_files:</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  expand(<span class="st">"p_</span><span class="sc">{{</span><span class="st">parallel_proportion</span><span class="sc">}}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{count}</span><span class="st">.json"</span>, count<span class="op">=</span>NTASK_SIZES)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"echo {input} done &gt; {output}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>rule generate_run_files:</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="bu">input</span>:  expand(<span class="st">"p_</span><span class="sc">{{</span><span class="st">parallel_proportion</span><span class="sc">}}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{count}</span><span class="st">.json"</span>, count<span class="op">=</span>NTASK_SIZES)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    shell:</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>        <span class="co">"echo {input} done &gt; {output}"</span></span></code></pre>
 </div>
 <p>The <code>expand(...)</code> function in this rule generates a list
 of filenames, by taking the first thing in the single parentheses as a
@@ -369,18 +369,17 @@ the rule directly, we still need to request a specific file:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.999_runs.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.999_runs.txt</span></code></pre>
 </div>
 <p>If you don’t specify a target rule name or any file names on the
 command line when running Snakemake, the default is to use <strong>the
 first rule</strong> in the Snakefile as the target.</p>
-<div id="rules-as-targets" class="callout callout">
+<div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="rules-as-targets" class="callout-inner">
-<h3 class="callout-title">Rules as targets<a class="anchor" aria-label="anchor" href="#rules-as-targets"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="rules-as-targets">Rules as targets<a class="anchor" aria-label="anchor" href="#rules-as-targets"></a></h3>
 <div class="callout-content">
 <p>Giving the name of a rule to Snakemake on the command line only works
 when that rule has <em>no wildcards</em> in the outputs, because
@@ -406,25 +405,25 @@ download it with</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> https://ocaisa.github.io/hpc-workflows/files/plot_terse_amdahl_results.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> https://ocaisa.github.io/hpc-workflows/files/plot_terse_amdahl_results.py</span></code></pre>
 </div>
 <p>The script <code>plot_terse_amdahl_results.py</code> needs a command
 line that looks like:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> plot_terse_amdahl_results.py <span class="op">&lt;</span>output jpeg filename<span class="op">&gt;</span> <span class="op">&lt;</span>1st input file<span class="op">&gt;</span> <span class="op">&lt;</span>2nd input file<span class="op">&gt;</span> ...</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">python</span> plot_terse_amdahl_results.py <span class="op">&lt;</span>output jpeg filename<span class="op">&gt;</span> <span class="op">&lt;</span>1st input file<span class="op">&gt;</span> <span class="op">&lt;</span>2nd input file<span class="op">&gt;</span> ...</span></code></pre>
 </div>
 <p>Let’s introduce that into our <code>generate_run_files</code>
 rule:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rule generate_run_files:</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  expand(<span class="st">"p_</span><span class="sc">{{</span><span class="st">parallel_proportion</span><span class="sc">}}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{count}</span><span class="st">.json"</span>, count<span class="op">=</span>NTASK_SIZES)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"python plot_terse_amdahl_results.py {output} {input}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>rule generate_run_files:</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_runs.txt"</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="bu">input</span>:  expand(<span class="st">"p_</span><span class="sc">{{</span><span class="st">parallel_proportion</span><span class="sc">}}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{count}</span><span class="st">.json"</span>, count<span class="op">=</span>NTASK_SIZES)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    shell:</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>        <span class="co">"python plot_terse_amdahl_results.py {output} {input}"</span></span></code></pre>
 </div>
 <div id="challenge1" class="callout challenge">
 <div class="callout-square">
@@ -444,18 +443,18 @@ environment module? Add this requirement to our rule.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rule generate_run_files:</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_scalability.jpg"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  expand(<span class="st">"p_</span><span class="sc">{{</span><span class="st">parallel_proportion</span><span class="sc">}}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{count}</span><span class="st">.json"</span>, count<span class="op">=</span>NTASK_SIZES)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    envmodules:</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="co">"matplotlib"</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">"python plot_terse_amdahl_results.py {output} {input}"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>rule generate_run_files:</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    output: <span class="st">"p_</span><span class="sc">{parallel_proportion}</span><span class="st">_scalability.jpg"</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="bu">input</span>:  expand(<span class="st">"p_</span><span class="sc">{{</span><span class="st">parallel_proportion</span><span class="sc">}}</span><span class="st">/runs/amdahl_run_</span><span class="sc">{count}</span><span class="st">.json"</span>, count<span class="op">=</span>NTASK_SIZES)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    envmodules:</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>      <span class="co">"matplotlib"</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    shell:</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>        <span class="co">"python plot_terse_amdahl_results.py {output} {input}"</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -466,7 +465,7 @@ Snakemake command</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.999_scalability.jpg</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.999_scalability.jpg</span></code></pre>
 </div>
 <div id="challenge2" class="callout challenge">
 <div class="callout-square">
@@ -485,12 +484,12 @@ Snakemake command</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2">Show me the solution</h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>NTASK_SIZES <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>]</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>NTASK_SIZES <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>]</span></code></pre>
 </div>
 </div>
 </div>
@@ -513,12 +512,12 @@ Snakemake command</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3">Show me the solution</h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.8_scalability.jpg</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">--profile</span> cluster_profile/ p_0.8_scalability.jpg</span></code></pre>
 </div>
 </div>
 </div>
@@ -615,7 +614,7 @@ any links that you are not going to use.
   "identifier": "https://carpentries-incubator.github.io/hpc-workflows/instructor/06-expansion.html",
   "dateCreated": "2023-04-19",
   "dateModified": "2024-02-01",
-  "datePublished": "2024-02-27"
+  "datePublished": "2024-03-05"
 }
 
   </script><script>

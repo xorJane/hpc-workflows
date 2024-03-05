@@ -323,7 +323,7 @@ where the command is executed:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ hostname</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ hostname</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -335,7 +335,7 @@ status of your workflow, so let’s redirect the output to a file:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ hostname <span class="op">&gt;</span> hostname_login.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ hostname <span class="op">&gt;</span> hostname_login.txt</span></code></pre>
 </div>
 </section><section id="making-a-snakefile"><h2 class="section-heading">Making a Snakefile<a class="anchor" aria-label="anchor" href="#making-a-snakefile"></a>
 </h2>
@@ -344,19 +344,18 @@ status of your workflow, so let’s redirect the output to a file:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rule hostname_login:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    output: <span class="st">"hostname_login.txt"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:  </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    shell:</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"hostname &gt; hostname_login.txt"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>rule hostname_login:</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    output: <span class="st">"hostname_login.txt"</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="bu">input</span>:  </span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    shell:</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>        <span class="co">"hostname &gt; hostname_login.txt"</span></span></code></pre>
 </div>
-<div id="key-points-about-this-file" class="callout callout">
+<div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="key-points-about-this-file" class="callout-inner">
-<h3 class="callout-title">Key points about this file<a class="anchor" aria-label="anchor" href="#key-points-about-this-file"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="key-points-about-this-file">Key points about this file<a class="anchor" aria-label="anchor" href="#key-points-about-this-file"></a></h3>
 <div class="callout-content">
 <ol style="list-style-type: decimal"><li>The file is named <code>Snakefile</code> - with a capital
 <code>S</code> and no file extension.</li>
@@ -385,16 +384,14 @@ were any missing quotes, bad indents, etc. we may see an error.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">-j1</span> <span class="at">-p</span> hostname_login</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">-j1</span> <span class="at">-p</span> hostname_login</span></code></pre>
 </div>
-<div id="bash-snakemake-command-not-found..." class="callout callout">
+<div id="callout2" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="bash-snakemake-command-not-found..." class="callout-inner">
-<h3 class="callout-title">
-<code>bash: snakemake: command not found...</code><a class="anchor" aria-label="anchor" href="#bash-snakemake-command-not-found..."></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="bash-snakemake-command-not-found---"><code>bash: snakemake: command not found...</code><a class="anchor" aria-label="anchor" href="#bash-snakemake-command-not-found---"></a></h3>
 <div class="callout-content">
 <p>If your shell tells you that it cannot find the command
 <code>snakemake</code> then we need to make the software available
@@ -403,7 +400,7 @@ to load:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> spider snakemake</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">module</span> spider snakemake</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -434,14 +431,14 @@ available</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ module load snakemake</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ module load snakemake</span></code></pre>
 </div>
 <p>and then make sure we have the <code>snakemake</code> command
 available</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ which snakemake</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="ex">[ocaisa@node1</span> ~]$ which snakemake</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -567,7 +564,7 @@ any links that you are not going to use.
   "identifier": "https://carpentries-incubator.github.io/hpc-workflows/01-introduction.html",
   "dateCreated": "2023-04-19",
   "dateModified": "2024-02-01",
-  "datePublished": "2024-02-27"
+  "datePublished": "2024-03-05"
 }
 
   </script><script>
