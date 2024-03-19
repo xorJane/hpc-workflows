@@ -388,12 +388,12 @@ status of your workflow, so let’s redirect the output to a file:</p>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    shell:</span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>        <span class="co">"hostname &gt; hostname_login.txt"</span></span></code></pre>
 </div>
-<div id="callout1" class="callout">
+<div id="key-points-about-this-file" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="key-points-about-this-file">Key points about this file<a class="anchor" aria-label="anchor" href="#key-points-about-this-file"></a>
+<div id="key-points-about-this-file" class="callout-inner">
+<h3 class="callout-title">Key points about this file<a class="anchor" aria-label="anchor" href="#key-points-about-this-file"></a>
 </h3>
 <div class="callout-content">
 <ol style="list-style-type: decimal">
@@ -427,13 +427,13 @@ were any missing quotes, bad indents, etc. we may see an error.</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">-j1</span> <span class="at">-p</span> hostname_login</span></code></pre>
 </div>
-<div id="callout2" class="callout">
+<div id="bash-snakemake-command-not-found..." class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="bash-snakemake-command-not-found---">
-<code>bash: snakemake: command not found...</code><a class="anchor" aria-label="anchor" href="#bash-snakemake-command-not-found---"></a>
+<div id="bash-snakemake-command-not-found..." class="callout-inner">
+<h3 class="callout-title">
+<code>bash: snakemake: command not found...</code><a class="anchor" aria-label="anchor" href="#bash-snakemake-command-not-found..."></a>
 </h3>
 <div class="callout-content">
 <p>If your shell tells you that it cannot find the command
@@ -614,12 +614,12 @@ the actions are re-run to update the target. Using this approach,
 Snakemake knows to only rebuild the files that, either directly or
 indirectly, depend on the file that changed. This is called an
 <em>incremental build</em>.</p>
-<div id="callout1" class="callout">
+<div id="incremental-builds-improve-efficiency" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="incremental-builds-improve-efficiency">Incremental Builds Improve Efficiency<a class="anchor" aria-label="anchor" href="#incremental-builds-improve-efficiency"></a>
+<div id="incremental-builds-improve-efficiency" class="callout-inner">
+<h3 class="callout-title">Incremental Builds Improve Efficiency<a class="anchor" aria-label="anchor" href="#incremental-builds-improve-efficiency"></a>
 </h3>
 <div class="callout-content">
 <p>By only rebuilding files when required, Snakemake makes your
@@ -974,12 +974,12 @@ files are repeated in places throughout the Snakefile rules. Snakefiles
 are a form of code and, in any code, repetition can lead to problems
 (e.g. we rename a data file in one part of the Snakefile but forget to
 rename it elsewhere).</p>
-<div id="callout1" class="callout">
+<div id="d.r.y.-dont-repeat-yourself" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="d-r-y--dont-repeat-yourself">D.R.Y. (Don’t Repeat Yourself)<a class="anchor" aria-label="anchor" href="#d-r-y--dont-repeat-yourself"></a>
+<div id="d.r.y.-dont-repeat-yourself" class="callout-inner">
+<h3 class="callout-title">D.R.Y. (Don’t Repeat Yourself)<a class="anchor" aria-label="anchor" href="#d.r.y.-dont-repeat-yourself"></a>
 </h3>
 <div class="callout-content">
 <p>In many programming languages, the bulk of the language features are
@@ -1117,7 +1117,7 @@ to find out why?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1220,7 +1220,7 @@ so make that a default option of our profile (by setting it’s value to
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2">Show me the solution</h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Update our cluster profile to</p>
 <div class="codewrapper sourceCode" id="cb6">
@@ -1318,12 +1318,12 @@ a wildcard looks like</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>output: <span class="st">"amdahl_run_</span><span class="sc">{parallel_tasks}</span><span class="st">.txt"</span></span></code></pre>
 </div>
 <p>where <code>parallel_tasks</code> is our wildcard.</p>
-<div id="callout1" class="callout">
+<div id="wildcards" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="wildcards">Wildcards<a class="anchor" aria-label="anchor" href="#wildcards"></a>
+<div id="wildcards" class="callout-inner">
+<h3 class="callout-title">Wildcards<a class="anchor" aria-label="anchor" href="#wildcards"></a>
 </h3>
 <div class="callout-content">
 <p>Wildcards are used in the <code>input</code> and <code>output</code>
@@ -1375,12 +1375,12 @@ output file as expected</li>
 </ol>
 </li>
 </ol>
-<div id="callout2" class="callout">
+<div id="dry-run--n-mode" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="dry-run--n-mode">Dry-run (<code>-n</code>) mode<a class="anchor" aria-label="anchor" href="#dry-run--n-mode"></a>
+<div id="dry-run--n-mode" class="callout-inner">
+<h3 class="callout-title">Dry-run (<code>-n</code>) mode<a class="anchor" aria-label="anchor" href="#dry-run--n-mode"></a>
 </h3>
 <div class="callout-content">
 <p>It’s often useful to run just the first two phases, so that Snakemake
@@ -1483,12 +1483,12 @@ can use that to set the value for <code>tasks</code>:</p>
 </div>
 <p>Now we have a rule that can be used to generate output from runs of
 an arbitrary number of parallel tasks.</p>
-<div id="callout3" class="callout">
+<div id="comments-in-snakefiles" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="comments-in-snakefiles">Comments in Snakefiles<a class="anchor" aria-label="anchor" href="#comments-in-snakefiles"></a>
+<div id="comments-in-snakefiles" class="callout-inner">
+<h3 class="callout-title">Comments in Snakefiles<a class="anchor" aria-label="anchor" href="#comments-in-snakefiles"></a>
 </h3>
 <div class="callout-content">
 <p>In the above code, the line beginning <code>#</code> is a comment
@@ -1541,7 +1541,7 @@ requested file to the <code>output</code> from a rule)</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3">Show me the solution</h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1645,7 +1645,7 @@ default value is 0.8) for the case where we have 6 parallel tasks.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4">Show me the solution</h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1757,7 +1757,7 @@ runs on the login node only?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>We need to add the new rule to our <code>localrules</code>:</p>
 <div class="codewrapper sourceCode" id="cb3">
@@ -1864,12 +1864,12 @@ are alway <strong>working backwards</strong> from the final desired
 result. The order of operations is determined by applying the pattern
 matching rules to the filenames, not by the order of the rules in the
 Snakefile.</p>
-<div id="callout1" class="callout">
+<div id="outputs-first" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="outputs-first">Outputs first?<a class="anchor" aria-label="anchor" href="#outputs-first"></a>
+<div id="outputs-first" class="callout-inner">
+<h3 class="callout-title">Outputs first?<a class="anchor" aria-label="anchor" href="#outputs-first"></a>
 </h3>
 <div class="callout-content">
 <p>The Snakemake approach of working backwards from the desired output
@@ -1882,13 +1882,13 @@ use whatever order makes sense to you.</p>
 </div>
 </div>
 </div>
-<div id="callout2" class="callout">
+<div id="log-outputs-in-snakemake" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="log-outputs-in-snakemake">
-<code>log</code> outputs in Snakemake<a class="anchor" aria-label="anchor" href="#log-outputs-in-snakemake"></a>
+<div id="log-outputs-in-snakemake" class="callout-inner">
+<h3 class="callout-title">
+<code>log</code>outputs in Snakemake<a class="anchor" aria-label="anchor" href="#log-outputs-in-snakemake"></a>
 </h3>
 <div class="callout-content">
 <p>Snakemake has a dedicated rule field for outputs that are <a href="https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#log-files" class="external-link">log
@@ -1901,12 +1901,12 @@ Snakemake we’ll stick with regular <code>input</code> and
 </div>
 </div>
 </div>
-<div id="callout3" class="callout">
+<div id="errors-are-normal" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="errors-are-normal">Errors are normal<a class="anchor" aria-label="anchor" href="#errors-are-normal"></a>
+<div id="errors-are-normal" class="callout-inner">
+<h3 class="callout-title">Errors are normal<a class="anchor" aria-label="anchor" href="#errors-are-normal"></a>
 </h3>
 <div class="callout-content">
 <p>Don’t be disheartened if you see errors when first testing your new
@@ -2048,12 +2048,12 @@ the rule directly, we still need to request a specific file:</p>
 <p>If you don’t specify a target rule name or any file names on the
 command line when running Snakemake, the default is to use <strong>the
 first rule</strong> in the Snakefile as the target.</p>
-<div id="callout1" class="callout">
+<div id="rules-as-targets" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="rules-as-targets">Rules as targets<a class="anchor" aria-label="anchor" href="#rules-as-targets"></a>
+<div id="rules-as-targets" class="callout-inner">
+<h3 class="callout-title">Rules as targets<a class="anchor" aria-label="anchor" href="#rules-as-targets"></a>
 </h3>
 <div class="callout-content">
 <p>Giving the name of a rule to Snakemake on the command line only works
@@ -2258,7 +2258,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.2" class="external-link">sandpaper (0.16.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.3" class="external-link">sandpaper (0.16.3)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
 			</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -2281,8 +2281,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/hpc-workflows/aio.html",
   "identifier": "https://carpentries-incubator.github.io/hpc-workflows/aio.html",
   "dateCreated": "2023-04-19",
-  "dateModified": "2024-03-12",
-  "datePublished": "2024-03-12"
+  "dateModified": "2024-03-19",
+  "datePublished": "2024-03-19"
 }
 
   </script><script>

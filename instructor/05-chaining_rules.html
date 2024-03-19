@@ -348,7 +348,7 @@ runs on the login node only?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>We need to add the new rule to our <code>localrules</code>:</p>
 <div class="codewrapper sourceCode" id="cb3">
@@ -449,12 +449,13 @@ are alway <strong>working backwards</strong> from the final desired
 result. The order of operations is determined by applying the pattern
 matching rules to the filenames, not by the order of the rules in the
 Snakefile.</p>
-<div id="callout1" class="callout">
+<div id="outputs-first" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="outputs-first">Outputs first?<a class="anchor" aria-label="anchor" href="#outputs-first"></a></h3>
+<div id="outputs-first" class="callout-inner">
+<h3 class="callout-title">Outputs first?<a class="anchor" aria-label="anchor" href="#outputs-first"></a>
+</h3>
 <div class="callout-content">
 <p>The Snakemake approach of working backwards from the desired output
 to determine the workflow is why we’re putting the <code>output</code>
@@ -466,13 +467,14 @@ use whatever order makes sense to you.</p>
 </div>
 </div>
 </div>
-<div id="callout2" class="callout">
+<div id="log-outputs-in-snakemake" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="log-outputs-in-snakemake">
-<code>log</code> outputs in Snakemake<a class="anchor" aria-label="anchor" href="#log-outputs-in-snakemake"></a></h3>
+<div id="log-outputs-in-snakemake" class="callout-inner">
+<h3 class="callout-title">
+<code>log</code>outputs in Snakemake<a class="anchor" aria-label="anchor" href="#log-outputs-in-snakemake"></a>
+</h3>
 <div class="callout-content">
 <p>Snakemake has a dedicated rule field for outputs that are <a href="https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#log-files" class="external-link">log
 files</a>, and these are mostly treated as regular outputs except that
@@ -484,12 +486,13 @@ Snakemake we’ll stick with regular <code>input</code> and
 </div>
 </div>
 </div>
-<div id="callout3" class="callout">
+<div id="errors-are-normal" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="section level3 callout-title callout-inner">
-<h3 class="callout-title" id="errors-are-normal">Errors are normal<a class="anchor" aria-label="anchor" href="#errors-are-normal"></a></h3>
+<div id="errors-are-normal" class="callout-inner">
+<h3 class="callout-title">Errors are normal<a class="anchor" aria-label="anchor" href="#errors-are-normal"></a>
+</h3>
 <div class="callout-content">
 <p>Don’t be disheartened if you see errors when first testing your new
 Snakemake pipelines. There is a lot that can go wrong when writing a new
@@ -558,7 +561,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.2" class="external-link">sandpaper (0.16.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.3" class="external-link">sandpaper (0.16.3)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.4" class="external-link">pegboard (0.7.4)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.1" class="external-link">varnish (1.0.1)</a></p>
 			</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -581,7 +584,7 @@ any links that you are not going to use.
   "identifier": "https://carpentries-incubator.github.io/hpc-workflows/instructor/05-chaining_rules.html",
   "dateCreated": "2023-04-19",
   "dateModified": "2024-02-01",
-  "datePublished": "2024-03-12"
+  "datePublished": "2024-03-19"
 }
 
   </script><script>
