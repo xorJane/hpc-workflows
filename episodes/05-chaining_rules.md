@@ -5,187 +5,440 @@ exercises: 30
 ---
 
 ::: questions
-- "How do I combine rules into a workflow?"
-- "How do I make a rule with multiple inputs and outputs?"
+- "How do I combine steps into a workflow?"
+- "How do I make a step that uses the outputs from a previous step?"
 :::
 
 ::: objectives
-- ""
+- "Create workflow pipelines with dependencies"
+- "Use the outputs of one step as inputs to the next"
 :::
 
 ## A pipeline of multiple rules
 
-We now have a rule that can generate output for any value of `-p` and any number
-of tasks, we just need to call Snakemake with the parameters that we want:
-```bash
-snakemake --profile cluster_profile p_0.999/runs/amdahl_run_6.json
+In this episode, we will plot the scaling results generated in the last
+episode using the script `plot_terse_amdahl_results.py`. These results
+report how long the work of running `amdahl` took when using between
+2 and 36 processes.
+
+We want to plot these results automatically, i.e. as part of our workflow.
+In order to do this correctly, we need to make sure that our python
+plotting script runs only **after** we have finished calculating all
+results.
+
+We can control the order and relative timing of when steps execute
+by defining dependencies.
+
+For example, consider the following YAML, `depends.yaml`:
+
+```yml
+description:
+    name: Dependency-exploration
+    description: Experiment with adding dependencies
+
+batch:
+    type: slurm
+    host: quartz # machine to run on
+    bank: guest # bank
+    queue: pbatch # partition
+
+env:
+    variables:
+      OUTPUT_PATH: ./Episode5
+      OUTPUT: date.txt
+
+study:
+    - name: date-batch
+      description: Write the date and node's hostname to a file
+      run:
+          cmd: |
+              echo "From batch node:" >> $(OUTPUT)
+              hostname >> $(OUTPUT)
+              date >> $(OUTPUT)
+              sleep 10
+          nodes: 1
+          procs: 1
+          walltime: "00:00:30"
+    - name: date-login
+      description: Write the date and login node's hostname to a file
+      run:
+          cmd: |
+              echo "From login node:" >> $(OUTPUT)
+              hostname >> $(OUTPUT)
+              date >> $(OUTPUT)
+              sleep 10
 ```
 
-That's not exactly convenient though, to generate a full dataset we have to run
-Snakemake lots of times with different output file targets. Rather than that,
-let's create a rule that can generate those files for us.
+This script has two steps, each of which writes the type of
+node of its host, the particular hostname, and the date/time
+before waiting for 10 seconds. The step `date-login` is run
+on a login node and the step `date-batch` is run on a "batch"
+or "compute" node.
 
-Chaining rules in Snakemake is a matter of choosing filename patterns that
-connect the rules.
-There's something of an art to it - most times there are several options that
-will work:
+::: challenge
 
-```python
-rule generate_run_files:
-    output: "p_{parallel_proportion}_runs.txt"
-    input:  "p_{parallel_proportion}/runs/amdahl_run_6.json"
-    shell:
-        "echo {input} done > {output}"
+Run the above script with
+
+```bash
+maestro run depends.yaml
+```
+
+You can then `cat` the output of both steps to `stdout` via a
+command of the form 
+
+```bash
+cat Episode5/Dependency-exploration-{FILL}/date-*/*.txt
+```
+
+where `{FILL}` should be replaced by the date/time info of
+this run. This will print the output of the two steps to
+`stdout`.
+
+Which step is printed first and how close together are they
+completed?
+
+:::::: solution
+
+You'll likely see output somewhat similar to
+
+```bash
+(maestro_venv) janeh@pascal83:~$ cat Episode5/Dependency-exploration_20240326-143559/date-*/date.txt
+```
+```output
+From batch node:
+pascal16
+Tue Mar 26 14:36:04 PDT 2024
+From login node:
+pascal83
+Tue Mar 26 14:36:03 PDT 2024
+```
+
+though the times/dates and hostnames will be different.
+We didn't try to control the order of operations, so
+each step will have run as soon as it had resources.
+Probably you'll see that the timestamp on the login node
+is earlier because it will not have to wait for resources
+from the queue.
+
+::::::
+:::
+
+Next, let's add a dependency to ensure that the batch step
+runs **before** the login node step. To add a dependency
+a line with the following format must be added to a step's
+`run` block:
+
+```yml
+        depends: [`{STEP NAME}`]
+```
+
+`{STEP NAME}` is replaced by the name of the step from the
+study that you want the current step to depend upon. 
+
+If we update `date-login` to include a dependency, we'll see
+
+```yml
+    - name: date-login
+      description: Write the date and login node's hostname to a file
+      run:
+          cmd: |
+              echo "From login node:" >> $(OUTPUT)
+              hostname >> $(OUTPUT)
+              date >> $(OUTPUT)
+              sleep 10
+          depends: [date-batch]
+```
+
+Now `date-login` will not run until `date-batch` has finished.
+
+::: challenge
+
+Update `depends.yaml` to make `date-login` wait for `date-batch`
+to complete before running. Then rerun `maestro run depends,yaml`.
+
+How has the output of the two `date.txt` files changed?
+
+::::::solution
+
+This time, you should see that the date printed from the
+login node is *at least* 10 seconds later than the date
+printed on the batch node. For example, on Pascal I see
+
+```bash
+$ cat Episode5/Dependency-exploration_20240326-150950/date-*/date.txt
+```
+
+```output
+From batch node:
+pascal16
+Tue Mar 26 15:09:54 PDT 2024
+From login node:
+pascal83
+Tue Mar 26 15:10:53 PDT 2024
+```
+::::::
+:::
+
+## A step that waits for all iterations of its dependency
+
+Let's return to our Amdahl scaling study and the YAML
+with which we ended in the last episode:
+
+```yml
+description:
+    name: Amdahl
+    description: Run a parallel program
+
+batch:
+    type: slurm
+    host: quartz # machine to run on
+    bank: guest # bank
+    queue: pbatch # partition
+
+env:
+    variables:
+      P: .999
+      OUTPUT: amdahl.json
+      OUTPUT_PATH: ./Episode5
+
+study:
+    - name: amdahl
+      description: run in parallel
+      run:
+          # Here's where we include our MPI wrapper:
+          cmd: |
+               $(LAUNCHER) amdahl --terse -p $(P) >> $(OUTPUT)
+          nodes: 1
+          procs: $(TASKS)
+          walltime: "00:01:30"
+
+global.parameters:
+    TASKS:
+        values: [2, 4, 8, 18, 24, 36]
+        label: TASKS.%%
+```
+
+Ultimately we want to add a plotting step that depends upon
+`amdahl`, but for now let's create a placeholder that will
+go under `study` and beneath `amdahl`:
+
+```
+   - name: plot
+      description: Create a plot from `amdahl` results
+      run:
+          # We'll update this `cmd` later
+          cmd: |
+               echo "This is where we plot"
+```
+
+Based on what we saw before, we might think that we just
+need to add
+
+```
+          depends: [amdahl]
+```
+
+to the end of this block. Instead, the syntax changes
+slightly because `amdahl` is parameterized -- i.e. it will
+run for several task values. To indicate that we want `plot`
+to run after *ALL* `amdahl` steps, we'll add a `_*` to the
+end of the step name:
+
+```
+          depends: [amdahl_*]
+```
+
+Now our new step definition will look like
+
+```yml
+   - name: plot
+      description: Create a plot from `amdahl` results
+      run:
+          # We'll update this `cmd` later
+          cmd: |
+               echo "This is where we plot"
+          depends: [amdahl_*]
+```
+
+## Using the outputs from a previous step
+
+### Manually plotting scaling results
+In your working directory, you should have a copy of 
+`plot_terse_amdahl_results.py`. The syntax for running this script is
+
+```
+python3 plot_terse_amdahl_results.py {output image name} {input json filenames}
+```
+
+Before trying to add this command to our workflow, let's run it manually
+to see how it works. We can call the output image `output.jpg`. As for
+the input names, we can use the `.json` files created at the end of
+episode 4. In particular if you run
+
+```bash
+ls Episode4/Amdahl_<Date>_<Time>/amdahl/TASKS.*/amdahl.json
+```
+using the `<Date>` and `<Time>` of your last run in Episode 4, you should
+see a list of files named `amdahl.json`:
+
+```bash
+$ ls Episode4/Amdahl_20240326-155434/amdahl/TASKS.*/amdahl.json
+```
+```output
+Episode4/Amdahl_20240326-155434/amdahl/TASKS.18/amdahl.json
+Episode4/Amdahl_20240326-155434/amdahl/TASKS.24/amdahl.json
+Episode4/Amdahl_20240326-155434/amdahl/TASKS.2/amdahl.json
+Episode4/Amdahl_20240326-155434/amdahl/TASKS.36/amdahl.json
+Episode4/Amdahl_20240326-155434/amdahl/TASKS.4/amdahl.json
+Episode4/Amdahl_20240326-155434/amdahl/TASKS.8/amdahl.json
+```
+
+You can use this same filepath with wildcards to specify this list of
+JSON files as inputs to our python script:
+
+```bash
+python3 plot_terse_amdahl_results.py output.jpg Episode4/Amdahl_<Date>_<Time>/amdahl/TASKS.*/amdahl.json
 ```
 
 ::: challenge
 
-The new rule is doing no work, it's just making sure we create the file we want.
-It's not worth executing on the cluster. How do ensure it runs on the login node
-only?
+Generate a scaling plot by manually specifying the JSON files
+produced from a previous run of `amdahl.yaml`.
 
 :::::: solution
 
-We need to add the new rule to our `localrules`:
-```python
-localrules: hostname_login, generate_run_files
-```
+The resulting JPEG should look something like
 
+![](files/example-scaling-plot.jpg)
+
+::::::
 :::
 
-:::
+### Adding plotting to our workflow
 
-Now let's run the new rule (remember we need to request the output file by name
-as the `output` in our rule contains a wildcard pattern):
-```bash
-[ocaisa@node1 ~]$ snakemake --profile cluster_profile/ p_0.999_runs.txt
-```
-```output
-Using profile cluster_profile/ for setting default command line arguments.
-Building DAG of jobs...
-Retrieving input from storage.
-Using shell: /cvmfs/software.eessi.io/versions/2023.06/compat/linux/x86_64/bin/bash
-Provided remote nodes: 3
-Job stats:
-job                   count
-------------------  -------
-amdahl_run                1
-generate_run_files        1
-total                     2
+Let's update our `plot` step in `amdahl.yaml` to include python plotting
+rather than a placeholder `echo` command. We want the updated step to look
+something like
 
-Select jobs to execute...
-Execute 1 jobs...
-
-[Tue Jan 30 17:39:29 2024]
-rule amdahl_run:
-    output: p_0.999/runs/amdahl_run_6.json
-    jobid: 1
-    reason: Missing output files: p_0.999/runs/amdahl_run_6.json
-    wildcards: parallel_proportion=0.999, parallel_tasks=6
-    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, mem_mb_per_cpu=3600, runtime=2, mpi=mpiexec, tasks=6
-
-mpiexec -n 6 amdahl --terse -p 0.999 > p_0.999/runs/amdahl_run_6.json
-No SLURM account given, trying to guess.
-Guessed SLURM account: def-users
-Job 1 has been submitted with SLURM jobid 342 (log: /home/ocaisa/.snakemake/slurm_logs/rule_amdahl_run/342.log).
-[Tue Jan 30 17:47:31 2024]
-Finished job 1.
-1 of 2 steps (50%) done
-Select jobs to execute...
-Execute 1 jobs...
-
-[Tue Jan 30 17:47:31 2024]
-localrule generate_run_files:
-    input: p_0.999/runs/amdahl_run_6.json
-    output: p_0.999_runs.txt
-    jobid: 0
-    reason: Missing output files: p_0.999_runs.txt; Input files updated by another job: p_0.999/runs/amdahl_run_6.json
-    wildcards: parallel_proportion=0.999
-    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=/tmp, mem_mb_per_cpu=3600, runtime=2
-
-echo p_0.999/runs/amdahl_run_6.json done > p_0.999_runs.txt
-[Tue Jan 30 17:47:31 2024]
-Finished job 0.
-2 of 2 steps (100%) done
-Complete log: .snakemake/log/2024-01-30T173929.781106.snakemake.log
+```yml
+   - name: plot
+      description: Create a plot from `amdahl` results
+      run:
+          cmd: |
+               python3 plot_terse_amdahl_results.py output.jpg Episode5/Amdahl_<Date>_<Time>/amdahl/TASKS.*/amdahl.json
+          depends: [amdahl_*]
 ```
 
-Look at the logging messages that Snakemake prints in the terminal. What has happened here?
+The trouble is that we don't know the exact value of 
+`Episode5/Amdahl_<Date>_<Time>/amdahl` for a job that we haven't run
+yet. Luckily Maestro gives us a placeholder to the equivalent of this path
+for the current job --- `$(amdahl.workspace)`. This is the workspace for
+the `amdahl` step, where all outputs for `amdahl`, including our `TASKS.*`
+directories, are written.
 
-1. Snakemake looks for a rule to make `p_0.999_runs.txt`
-1. It determines that "generate_run_files" can make this if
-   `parallel_proportion=0.999`
-1. It sees that the input needed is therefore `p_0.999/runs/amdahl_run_6.json`
-<br/><br/>
-1. Snakemake looks for a rule to make `p_0.999/runs/amdahl_run_6.json`
-1. It determines that "amdahl_run" can make this if `parallel_proportion=0.999`
-   and `parallel_tasks=6`
-<br/><br/>
-1. Now Snakemake has reached an available input file (in this case, no input
-   file is actually required), it runs both steps to get the final output
+This means we can update the `plot` step as follows:
 
-This, in a nutshell, is how we build workflows in Snakemake.
-
-1. Define rules for all the processing steps
-1. Choose `input` and `output` naming patterns that allow Snakemake to link the
-   rules
-1. Tell Snakemake to generate the final output file(s)
-
-If you are used to writing regular scripts this takes a little
-getting used to. Rather than listing steps in order of execution, you are alway
-**working backwards** from the final desired result. The order of operations is
-determined by applying the pattern matching rules to the filenames, not by the
-order of the rules in the Snakefile.
+```yml
+   - name: plot
+      description: Create a plot from `amdahl` results
+      run:
+          cmd: |
+               python3 plot_terse_amdahl_results.py output.jpg $(amdahl.workspace)/TASKS.*/amdahl.json
+          depends: [amdahl_*]
+```
 
 ::: callout
 
-## Outputs first?
+Where does the `plot_terse_amdahl_results.py` script live? In Maestro,
+`$(SPECROOT)` specifies the root directory from which you originally
+ran `maestro run...`. This is where `plot_terse_amdahl_results.py` should
+live, so let's be more precise:
 
-The Snakemake approach of working backwards from the desired output to determine
-the workflow is why we're putting the `output` lines first in all our rules - to
-remind us that these are what Snakemake looks at first!
-
-Many users of Snakemake, and indeed the official documentation, prefer to have
-the `input` first, so in practice you should use whatever order makes sense to
-you.
-
-:::
-
-::: callout 
-
-## `log` outputs in Snakemake
-
-Snakemake has a dedicated rule field for outputs that are
-[log files](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#log-files),
-and these are mostly treated as regular outputs except that log files are not
-removed if the job produces an error. This means you can look at the log to help
-diagnose the error. In a real workflow this can be very useful, but in terms of
-learning the fundamentals of Snakemake we'll stick with regular `input` and
-`output` fields here.
+```yml
+   - name: plot
+      description: Create a plot from `amdahl` results
+      run:
+          cmd: |
+               python3 $(SPECROOT)/plot_terse_amdahl_results.py output.jpg $(amdahl.workspace)/TASKS.*/amdahl.json
+          depends: [amdahl_*]
+```
 
 :::
+
+::: challenge
+
+Update `amdahl.yaml` so that 
+
+* one step definiton runs `amdahl` for 85% parallelizable code using [2, 4, 8, 16, 32] tasks
+* a second step plots the results.
+
+::::::solution
+
+Your YAML file should look something like
+
+```yml
+description:
+    name: Amdahl
+    description: Run a parallel program
+
+batch:
+    type: slurm
+    host: quartz # machine to run on
+    bank: guest # bank
+    queue: pbatch # partition
+
+env:
+    variables:
+      P: .85
+      OUTPUT: amdahl.json
+      OUTPUT_PATH: ./Episode5
+
+study:
+    - name: run-amdahl
+      description: run in parallel
+      run:
+          # Here's where we include our MPI wrapper:
+          cmd: |
+               $(LAUNCHER) amdahl --terse -p $(P) >> $(OUTPUT)
+          nodes: 1
+          procs: $(TASKS)
+          walltime: "00:01:30"
+    - name: plot
+      description: Create a plot from `amdahl` results
+      run:
+          cmd: |
+               python3 $(SPECROOT)/plot_terse_amdahl_results.py output.jpg $(run-amdahl.workspace)/TASKS.*/amdahl.json
+          depends: [amdahl_*]
+
+global.parameters:
+    TASKS:
+        values: [2, 4, 8, 16, 32]
+        label: TASKS.%%
+
+```
+
+::::::
+:::
+
 
 ::: callout
 
 ## Errors are normal
 
 Don't be disheartened if you see errors when first testing
-your new Snakemake pipelines. There is a lot that can go wrong when writing a
+your new Maestro pipelines. There is a lot that can go wrong when writing a
 new workflow, and you'll normally need several iterations to get things just
-right. One advantage of the Snakemake approach compared to regular scripts is
-that Snakemake fails fast when there is a problem, rather than ploughing on
-and potentially running junk calculations on partial or corrupted data. Another
-advantage is that when a step fails we can safely resume from where we left off.
+right. Luckily, `Maestro` will do some checks for consistency at the outset
+of the run. If you specify a dependency that doesn't exist (because of a
+rename, for example), the job will fail before submitting work to the queue.
 
 :::
 
 
 
 ::: keypoints
-- "Snakemake links rules by iteratively looking for rules that make missing
-  inputs"
-- "Rules may have multiple named inputs and/or outputs"
-- "If a shell command does not yield an expected output then Snakemake will
-  regard that as a failure"
+- "We can control the order of steps run in a study by creating dependencies."
+- "You can create a dependency with the `depends: [{step name}]` syntax."
+- "Dependency syntax changes to `depends: [{step name}_*]` for parameterized steps."
 :::
 

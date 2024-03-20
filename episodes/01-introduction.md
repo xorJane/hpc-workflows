@@ -1,15 +1,15 @@
 ---
-title: "Running commands with Snakemake"
+title: "Running commands with Maestro"
 teaching: 30
 exercises: 30
 ---
 
 ::: questions
-- "How do I run a simple command with Snakemake?"
+- "How do I run a simple command with Maestro?"
 :::
 
 :::objectives
-- "Create a Snakemake recipe (a Snakefile)"
+- "Create a Maestro YAML file"
 :::
 
 
@@ -28,149 +28,214 @@ our CPU allocation on the system.
 
 We could do all of this manually, but there are useful tools to help us manage
 data analysis pipelines like we have in our experiment. Today we'll learn about
-one of those: Snakemake.
+one of those: Maestro.
 
-In order to get started with Snakemake, let's begin by taking a simple command
-and see how we can run that via Snakemake. Let's choose the command `hostname`
+In order to get started with Maestro, let's begin by taking a simple command
+and see how we can run that via Maestro. Let's choose the command `hostname`
 which prints out the name of the host where the command is executed:
 
 ```bash
-[ocaisa@node1 ~]$ hostname
+janeh@pascal83:~$ hostname
 ```
 ```output
-node1.int.jetstream2.hpc-carpentry.org
+pascal83
 ```
 
-That prints out the result but Snakemake relies on files to know the status of
+That prints out the result but Maestro relies on files to know the status of
 your workflow, so let's redirect the output to a file:
 
 ```bash
-[ocaisa@node1 ~]$ hostname > hostname_login.txt
+janeh@pascal83:~$ hostname > hostname_login.txt
 ```
 
-## Making a Snakefile
+## Writing a Maestro YAML
 
-Edit a new text file named `Snakefile`.
+Edit a new text file named `hostname.yaml`.
 
-Contents of `Snakefile`:
+Contents of `hostname.yaml`:
 
-```python
-rule hostname_login:
-    output: "hostname_login.txt"
-    input:  
-    shell:
-        "hostname > hostname_login.txt"
+```yml
+description:
+    name: Hostnames
+    description: Report a node's hostname.
+
+study:
+    - name: hostname-login
+      description: Write the login node's hostname to a file
+      run:
+          cmd: |
+              hostname > hostname_login.txt
 ```
 
 ::: callout
 
 ## Key points about this file
 
-1. The file is named `Snakefile` - with a capital `S` and no file extension.
-1. Some lines are indented. Indents must be with space characters, not tabs. See
-   the setup section for how to make your text editor do this.
-1. The rule definition starts with the keyword `rule` followed by the rule name,
-   then a colon.
-1. We named the rule `hostname_login`. You may use letters, numbers or
-   underscores, but the rule name must begin with a letter and may not be a
-   keyword.
-1. The keywords `input`, `output`, `shell` are all followed by a colon.
-1. The file names and the shell command are all in `"quotes"`.
-1. The output filename is given before the input filename. In fact, Snakemake
-   doesn't care what order they appear in but we give the output first
-   throughout this course. We'll see why soon.
-1. In this use case there is no input file for the command so we leave this
-   blank.
+1. The name of `hostname.yaml` is not very important; it gives us information
+   about file contents and type, but maestro will behave the same if you rename
+   it to `hostname` or `foo.txt`.
+1. The file specifies fields in a hierarchy. For example, `name`, `description`,
+   and `run` are all passed to `study` and are at the same level in the hierarchy.
+   `description` and `study` are both at the top level in the hierarchy. 
+1. Indentation indicates the hierarchy and should be consistent. For example, all
+   the fields passed directly to `study` are indented relative to `study` and
+   their indentation is all the same. 
+1. The commands executed during the study are given under `cmd`. Starting this
+   entry with `|` and a newline character allows us to specify multiple commands.
+1. The example YAML file above is pretty minimal; all fields shown are required.
+1. The names given to `study` can include letters, numbers, and special characters.
+
 
 :::
 
-Back in the shell we'll run our new rule. At this point, if there were any
-missing quotes, bad indents, etc. we may see an error.
+Back in the shell we'll run our new rule. At this point, we may see an error if
+a required field is missing or if our indentation is inconsistent.
 
 ```bash
-$ snakemake -j1 -p hostname_login
+$ maestro run hostname.yaml
 ```
 
 ::: callout
 
-## `bash: snakemake: command not found...`
+## `bash: maestro: command not found...`
 
-If your shell tells you that it cannot find the command `snakemake` then we need
-to make the software available somehow. In our case, this means searching for
-the module that we need to load:
+If your shell tells you that it cannot find the command `maestro` then we need
+to make the software available somehow. In our case, this means activating the
+python virtual environment where maestro is installed.
 ```bash
-module spider snakemake
+source /usr/global/docs/training/janeh/maestro_venv/bin/activate
 ```
 
-```output
-[ocaisa@node1 ~]$ module spider snakemake
+You can tell this command has already been run when `(maestro_venv)` appears
+before your command prompt:
 
---------------------------------------------------------------------------------------------------------
-  snakemake:
---------------------------------------------------------------------------------------------------------
-     Versions:
-        snakemake/8.2.1-foss-2023a
-        snakemake/8.2.1 (E)
-
-Names marked by a trailing (E) are extensions provided by another module.
-
-
---------------------------------------------------------------------------------------------------------
-  For detailed information about a specific "snakemake" package (including how to load the modules) use the module's full name.
-  Note that names that have a trailing (E) are extensions provided by other modules.
-  For example:
-
-     $ module spider snakemake/8.2.1
---------------------------------------------------------------------------------------------------------
-
-```
-
-Now we want the module, so let's load that to make the package available
 
 ```bash
-[ocaisa@node1 ~]$ module load snakemake
+janeh@pascal83:~$ source /usr/global/docs/training/janeh/maestro_venv/bin/activate
+(maestro_venv) janeh@pascal83:~$
 ```
 
-and then make sure we have the `snakemake` command available
+Now that the `maestro_venv` virtual environment has been activated, the `maestro`
+command should be available, but let's double check
 
 ```bash
-[ocaisa@node1 ~]$ which snakemake
+(maestro_venv) janeh@pascal83:~$ which maestro
 ```
 ```output
-/cvmfs/software.eessi.io/host_injections/2023.06/software/linux/x86_64/amd/zen3/software/snakemake/8.2.1-foss-2023a/bin/snakemake
+/usr/global/docs/training/janeh/maestro_venv/bin/maestro
 ```
 :::
 
+
+## Running maestro
+
+Once you have `maestro` available to you, run `maestro run hostname.yaml`
+and enter `y` when prompted
+
+```bash
+(maestro_venv) janeh@pascal83:~$ maestro run hostname.yaml
+[2024-03-20 15:39:34: INFO] INFO Logging Level -- Enabled
+[2024-03-20 15:39:34: WARNING] WARNING Logging Level -- Enabled
+[2024-03-20 15:39:34: CRITICAL] CRITICAL Logging Level -- Enabled
+[2024-03-20 15:39:34: INFO] Loading specification -- path = hostname.yaml
+[2024-03-20 15:39:34: INFO] Directory does not exist. Creating directories to /g/g0/janeh/Hostnames_20240320-153934/logs
+[2024-03-20 15:39:34: INFO] Adding step 'hostname-login' to study 'Hostnames'...
+[2024-03-20 15:39:34: INFO]
+------------------------------------------
+Submission attempts =       1
+Submission restart limit =  1
+Submission throttle limit = 0
+Use temporary directory =   False
+Hash workspaces =           False
+Dry run enabled =           False
+Output path =               /g/g0/janeh/Hostnames_20240320-153934
+------------------------------------------
+Would you like to launch the study? [yn] y
+Study launched successfully.
+```
+
+and look at the outputs. You should have a new directory whose name includes a
+date and timestamp and that starts with the `name` given under `description`
+at the top of `hostname.yaml`.
+
+In that directory will be a subdirectory for every `study` run from
+`hostname.yaml`. The subdirectories for each study include all output files
+for that study
+
+```bash
+(maestro_venv) janeh@pascal83:~$ cd Hostnames_20240320-153934/
+(maestro_venv) janeh@pascal83:~/Hostnames_20240320-153934$ ls
+```
+```output
+batch.info      Hostnames.pkl        Hostnames.txt  logs  status.csv
+hostname-login  Hostnames.study.pkl  hostname.yaml  meta
+```
+```bash
+(maestro_venv) janeh@pascal83:~/Hostnames_20240320-153934$ cd hostname-login/
+(maestro_venv) janeh@pascal83:~/Hostnames_20240320-153934/hostname-login$ ls
+```output
+hostname-login.2284862.err  hostname-login.2284862.out  hostname-login.sh  hostname_login.txt
+```
+
 ::: challenge
-## Running Snakemake
 
-Run `snakemake --help | less` to see the help for all available options.
-What does the `-p` option in the `snakemake` command above do?
+To which file will the login node's hostname, `pascal83`, be written?
 
-1. Protects existing output files
-1. Prints the shell commands that are being run to the terminal
-1. Tells Snakemake to only run one process at a time
-1. Prompts the user for the correct input file
-
-*Hint: you can search in the text by pressing `/`, and quit back to the shell
-with `q`*
+1. hostname-login.2284862.err
+2. hostname-login.2284862.out
+3. hostname-login.sh
+4. hostname_login.txt
 
 :::::: solution
-(2) Prints the shell commands that are being run to the terminal
+(4) hostname_login.txt
 
-This is such a useful thing we don't know why it isn't the default! The `-j1`
-option is what tells Snakemake to only run one process at a time, and we'll
-stick with this for now as it makes things simpler. Answer 4 is a total
-red-herring, as Snakemake never prompts interactively for user input.
+In the original `hostname.yaml` file that we ran, we specified that
+hostname would be written to `hostname_login.txt`, and this is where
+we'll see that output, if the run worked!
+::::::
+:::
+
+::: challenge
+
+This one is tricky! In the example above, `pascal83` was written to
+`.../Hostnames_{date}_{time}/hostname-login/hostname_login.txt`.
+
+Where would `Hello` be written for the following YAML?
+
+```yml
+description:
+    name: MyHello
+    description: Report a node's hostname.
+
+study:
+    - name: give-salutation
+      description: Write the login node's hostname to a file
+      run:
+          cmd: |
+              echo "hello" > greeting.txt
+```
+
+
+1. `.../give-salutation_{date}_{time}/greeting/greeting.txt`
+2. `.../greeting_{date}_{time}/give_salutation/greeting.txt`
+3. `.../MyHello_{date}_{time}/give-salutation/greeting.txt`
+4. `.../MyHello_{date}_{time}/greeting/greeting.txt`
+
+:::::: solution
+
+(3) `.../MyHello_{date}_{time}/give-salutation/greeting.txt`
+
+The toplevel folder created starts with the `name` field under `description`; here, that's `MyHello`.
+Its subdirectory is named after the `study`; here, that's `give-salutation`.
+The file created is `greeting.txt` and this stores the output of `echo "hello"`.
+
 ::::::
 :::
 
 ::: keypoints
 
-- "Before running Snakemake you need to write a Snakefile"
-- "A Snakefile is a text file which defines a list of rules"
-- "Rules have inputs, outputs, and shell commands to be run"
-- "You tell Snakemake what file to make and it will run the shell command
-  defined in the appropriate rule"
+- "You execute `maestro run` with a YAML file including information about your run."
+- "Your run includes a description and at least one study (a step in your run)."
+- "Your maestro run creates a directory with subdirectories and outputs for each study."
 
 :::
